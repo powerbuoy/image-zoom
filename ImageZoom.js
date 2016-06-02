@@ -5,14 +5,14 @@
  * inside that element will "zoom out" of the link.
  *
  * @param	HTMLElement		wrap: the wrapping element, if you want all img links affected just run it on document.body
- * @param	String			duration: transition duration, default .1s
+ * @param	String			duration: transition duration (in ms), default 100
  */
 'use strict';
 
 var ImageZoom = {
 	init: function (wrap, duration) {
 		var wrap		= wrap || document.body;
-		var duration	= duration || '.1s';
+		var duration	= duration || 100;
 
 		// http://stackoverflow.com/questions/3437786/get-the-size-of-the-screen-current-web-page-and-browser-window
 		var getWinSize = function () {
@@ -73,7 +73,7 @@ var ImageZoom = {
 			targetIMG.style.zIndex		= '99';
 			targetIMG.style.maxHeight	= '90%';
 			targetIMG.style.maxWidth	= '90%';
-			targetIMG.style.transition	= 'all ' + duration + ' ease-out';
+			targetIMG.style.transition	= 'all ' + duration + 'ms ease-out';
 
 			// Position target on top
 			var positionOnTop = function () {
@@ -109,7 +109,7 @@ var ImageZoom = {
 
 				setTimeout(function () {
 					positionCenter();
-				}, 50);
+				});
 			};
 
 			// Check if already cached (TODO: needed?)
@@ -129,7 +129,7 @@ var ImageZoom = {
 				setTimeout(function () {
 					img.style.visibility = 'visible';
 					targetIMG.style.display = 'none';
-				}, 50);
+				}, duration);
 			});
 		});
 	}
