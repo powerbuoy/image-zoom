@@ -1,6 +1,6 @@
 {
   "name": "imagezoom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Make your images zoom out of the page with this handy JavaScript snippet",
   "main": "ImageZoom.js",
   "scripts": {
