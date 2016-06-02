@@ -28,6 +28,18 @@ var ImageZoom = function (w, d) {
 		};
 	};
 
+	// http://stackoverflow.com/questions/3464876/javascript-get-window-x-y-position-for-scroll
+	var getScrollPosition = function () {
+		var doc = document.documentElement;
+		var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+		var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+
+		return {
+			left: left,
+			top: top
+		};
+	};
+
 	// Check whether element is a link pointing to an image
 	var isIMGLink = function (el) {
 		return el && el.tagName && el.tagName.toUpperCase() == 'A' && el.href && el.href.match(/\.(png|gif|jpg|jpeg)$/);
@@ -61,7 +73,6 @@ var ImageZoom = function (w, d) {
 
 		var link				= clicked;
 		var targetIMGSize		= {};
-		var imgSize				= {};
 		var img					= link.getElementsByTagName('img');
 			img					= img.length ? img[0] : link; // Use the link as the source "img" if there is no img
 		var targetIMG			= document.createElement('img');
@@ -81,10 +92,11 @@ var ImageZoom = function (w, d) {
 
 		// Positions the large image on top of the source image
 		var positionOnTop = function () {
-			imgSize = img.getBoundingClientRect();
+			var imgSize = img.getBoundingClientRect();
+			var scrollPosition = getScrollPosition();
 
 			targetIMG.style.left		= imgSize.left + 'px';
-			targetIMG.style.top			= document.body.scrollTop + imgSize.top + 'px';
+			targetIMG.style.top			= scrollPosition.top + imgSize.top + 'px';
 			targetIMG.style.width		= imgSize.width + 'px';
 			targetIMG.style.height		= imgSize.height + 'px';
 			targetIMG.style.boxShadow	= '0 0 0 rgba(0, 0, 0, .4)';
@@ -93,9 +105,10 @@ var ImageZoom = function (w, d) {
 		// Positions the large image in the center of the screen
 		var positionCenter = function () {
 			var winSize = getWinSize();
+			var scrollPosition = getScrollPosition();
 
 			targetIMG.style.left		= (winSize.width - targetIMGSize.width) / 2 + 'px';
-			targetIMG.style.top			= document.body.scrollTop + (winSize.height - targetIMGSize.height) / 2 + 'px';
+			targetIMG.style.top			= scrollPosition.top + (winSize.height - targetIMGSize.height) / 2 + 'px';
 			targetIMG.style.width		= targetIMGSize.width + 'px';
 			targetIMG.style.height		= targetIMGSize.height + 'px';
 			targetIMG.style.boxShadow	= '0 0 60px rgba(0, 0, 0, .4)';
@@ -113,9 +126,7 @@ var ImageZoom = function (w, d) {
 			positionOnTop();
 
 			// Now position large image in center of screen
-			setTimeout(function () {
-				positionCenter();
-			});
+			setTimeout(positionCenter);
 		};
 
 		// Check if already cached (TODO: needed?)
