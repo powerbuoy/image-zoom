@@ -75,31 +75,51 @@ var ImageZoom = function (w, d) {
 		var targetIMGSize		= {};
 		var img					= link.getElementsByTagName('img');
 			img					= img.length ? img[0] : link; // Use the link as the source "img" if there is no img
+		var targetIMGWrap		= document.createElement('div');
 		var targetIMG			= document.createElement('img');
-			targetIMG.src		= link.getAttribute('href');
-			targetIMG.className	= 'imagezoom';
+		var closer				= document.createElement('a');
+
+		// Create target popup
+		targetIMGWrap.className	= 'imagezoom';
+		targetIMG.src			= link.getAttribute('href');
 
 		// Add the new image
-		document.body.appendChild(targetIMG);
+		targetIMGWrap.appendChild(targetIMG);
+		document.body.appendChild(targetIMGWrap);
 
 		// Initial styling
-		targetIMG.style.display		= 'block';
-		targetIMG.style.position	= 'absolute';
-		targetIMG.style.zIndex		= '99';
-		targetIMG.style.maxHeight	= '90%';
-		targetIMG.style.maxWidth	= '90%';
-		targetIMG.style.transition	= 'all ' + duration + 'ms ease-out';
+		targetIMGWrap.style.display		= 'block';
+		targetIMGWrap.style.position	= 'absolute';
+		targetIMGWrap.style.zIndex		= 100;
+		targetIMGWrap.style.transition	= 'all ' + duration + 'ms ease-out';
+
+		// Image
+		targetIMG.style.display			= 'block';
+		targetIMG.style.position		= 'absolute';
+		targetIMG.style.left			= '50%';
+		targetIMG.style.top				= '50%';
+		targetIMG.style.transform		= 'translateX(-50%) translateY(-50%)';
+		targetIMG.style.maxHeight		= '100%';
+		targetIMG.style.maxWidth		= '100%';
+		targetIMG.style.transition		= 'all ' + duration + 'ms ease-out';
 
 		// Positions the large image on top of the source image
 		var positionOnTop = function () {
 			var imgSize = img.getBoundingClientRect();
 			var scrollPosition = getScrollPosition();
 
-			targetIMG.style.left		= imgSize.left + 'px';
-			targetIMG.style.top			= scrollPosition.top + imgSize.top + 'px';
-			targetIMG.style.width		= imgSize.width + 'px';
-			targetIMG.style.height		= imgSize.height + 'px';
-			targetIMG.style.boxShadow	= '0 0 0 rgba(0, 0, 0, .4)';
+			targetIMGWrap.classList.remove('in-center');
+			targetIMGWrap.classList.add('on-top');
+
+			targetIMGWrap.style.position	= 'absolute';
+			targetIMGWrap.style.transition	= 'all ' + duration + 'ms ease-out';
+			targetIMGWrap.style.left		= imgSize.left + 'px';
+			targetIMGWrap.style.top			= scrollPosition.top + imgSize.top + 'px';
+			targetIMGWrap.style.width		= imgSize.width + 'px';
+			targetIMGWrap.style.height		= imgSize.height + 'px';
+
+			targetIMG.style.maxWidth		= '100%';
+			targetIMG.style.maxHeight		= '100%';
 		};
 
 		// Positions the large image in the center of the screen
@@ -107,11 +127,24 @@ var ImageZoom = function (w, d) {
 			var winSize = getWinSize();
 			var scrollPosition = getScrollPosition();
 
-			targetIMG.style.left		= (winSize.width - targetIMGSize.width) / 2 + 'px';
-			targetIMG.style.top			= scrollPosition.top + (winSize.height - targetIMGSize.height) / 2 + 'px';
-			targetIMG.style.width		= targetIMGSize.width + 'px';
-			targetIMG.style.height		= targetIMGSize.height + 'px';
-			targetIMG.style.boxShadow	= '0 0 60px rgba(0, 0, 0, .4)';
+			targetIMGWrap.classList.remove('on-top');
+			targetIMGWrap.classList.add('in-center');
+
+			targetIMGWrap.style.position	= 'absolute';
+			targetIMGWrap.style.left		= 0;
+			targetIMGWrap.style.top			= scrollPosition.top + 'px';
+			targetIMGWrap.style.width		= '100%';
+			targetIMGWrap.style.height		= '100%';
+
+			targetIMG.style.maxWidth		= '90%';
+			targetIMG.style.maxHeight		= '90%';
+
+			// When animation is complete - fix the image
+			setTimeout(function () {
+				targetIMGWrap.style.transition	= 'none';
+				targetIMGWrap.style.position = 'fixed';
+				targetIMGWrap.style.top = 0;
+			}, duration);
 		};
 
 		// When target has loaded
@@ -139,18 +172,26 @@ var ImageZoom = function (w, d) {
 			});
 		}
 
-		// Close the img when clicking it
-		targetIMG.addEventListener('click', function () {
-			positionOnTop();
+		// Closes the image
+		var closeImage = function () {
+			var scrollPosition = getScrollPosition();
+
+			targetIMGWrap.style.position	= 'absolute';
+			targetIMGWrap.style.top			= scrollPosition.top + 'px';
+
+			setTimeout(positionOnTop);
 
 			setTimeout(function () {
 				// Show source again
 				img.style.visibility = 'visible';
 
 				// Remove large image
-				targetIMG.parentNode.removeChild(targetIMG);
+				targetIMGWrap.parentNode.removeChild(targetIMGWrap);
 			}, duration);
-		});
+		};
+
+		// Close the img when clicking it
+		targetIMGWrap.addEventListener('click', closeImage);
 	});
 };
 

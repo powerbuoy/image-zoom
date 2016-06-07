@@ -1,0 +1,31 @@
+@keyframes imagezoom-fade-in {
+	0% {
+		background-color: rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		background-color: rgba(0, 0, 0, .8);
+	}
+}
+
+.imagezoom {
+	&:before {
+		display: block;
+		content: "\00d7";
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+		color: #fff;
+		font-size: 3rem;
+		line-height: 1rem;
+		cursor: pointer;
+	}
+
+	&.in-center {
+		animation-name: imagezoom-fade-in;
+		animation-duration: .2s;
+		animation-delay: .2s;
+		animation-iteration-count: 1;
+		animation-fill-mode: forwards;
+	}
+}
