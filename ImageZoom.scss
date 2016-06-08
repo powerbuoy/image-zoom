@@ -12,9 +12,12 @@
 	&:before {
 		display: block;
 		content: "\00d7";
+
 		position: absolute;
 		right: 1rem;
 		top: 1rem;
+		z-index: 1;
+
 		color: #fff;
 		font-size: 3rem;
 		line-height: 1rem;
