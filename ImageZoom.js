@@ -71,6 +71,10 @@ var ImageZoom = function (w, d) {
 		// An img link was clicked - go on
 		e.preventDefault();
 
+		if (clicked.classList.contains('imagezoom-loading')) {
+			return;
+		}
+
 		var link				= clicked;
 		var targetIMGSize		= {};
 		var img					= link.getElementsByTagName('img');
@@ -147,8 +151,12 @@ var ImageZoom = function (w, d) {
 			}, duration);
 		};
 
+		link.classList.add('imagezoom-loading');
+
 		// When target has loaded
 		var goOn = function () {
+			link.classList.remove('imagezoom-loading');
+
 			// Store large image's size when it's as big as it can be
 			targetIMGSize = targetIMG.getBoundingClientRect();
 

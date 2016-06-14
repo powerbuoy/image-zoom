@@ -8,6 +8,14 @@
 	}
 }
 
+.imagezoom-loading {
+	pointer-events: none;
+
+	img {
+		opacity: .5;
+	}
+}
+
 .imagezoom {
 	&:before {
 		display: block;
