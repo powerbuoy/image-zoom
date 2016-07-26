@@ -2,7 +2,7 @@
   "name": "imagezoom",
   "version": "1.0.1",
   "description": "Make your images zoom out of the page with this handy JavaScript snippet",
-  "main": "ImageZoom.js",
+  "main": "imagezoom.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
