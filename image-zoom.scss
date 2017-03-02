@@ -1,4 +1,4 @@
-@keyframes imagezoom-fade-in {
+@keyframes image-zoom-fade-in {
 	0% {
 		background-color: rgba(0, 0, 0, 0);
 	}
@@ -8,7 +8,7 @@
 	}
 }
 
-.imagezoom-loading {
+.image-zoom-loading {
 	pointer-events: none;
 
 	img {
@@ -16,7 +16,7 @@
 	}
 }
 
-.imagezoom {
+.image-zoom {
 	&:before {
 		display: block;
 		content: "\00d7";
@@ -36,7 +36,7 @@
 	}
 
 	&.in-center {
-		animation-name: imagezoom-fade-in;
+		animation-name: image-zoom-fade-in;
 		animation-duration: .2s;
 		animation-delay: .2s;
 		animation-iteration-count: 1;

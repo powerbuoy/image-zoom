@@ -1,14 +1,14 @@
 {
-  "name": "imagezoom",
+  "name": "image-zoom",
   "version": "1.0.1",
   "description": "Make your images zoom out of the page with this handy JavaScript snippet",
-  "main": "imagezoom.js",
+  "main": "image-zoom.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/powerbuoy/ImageZoom.git"
+    "url": "git+https://github.com/powerbuoy/image-zoom.git"
   },
   "keywords": [
     "image",
@@ -19,7 +19,7 @@
   "author": "Andreas Lagerkvist",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/powerbuoy/ImageZoom/issues"
+    "url": "https://github.com/powerbuoy/image-zoom/issues"
   },
-  "homepage": "https://github.com/powerbuoy/ImageZoom#readme"
+  "homepage": "https://github.com/powerbuoy/image-zoom#readme"
 }
