@@ -71,7 +71,7 @@ var ImageZoom = function (w, d) {
 		// An img link was clicked - go on
 		e.preventDefault();
 
-		if (clicked.classList.contains('imagezoom-loading')) {
+		if (clicked.classList.contains('image-zoom-loading')) {
 			return;
 		}
 
@@ -84,7 +84,7 @@ var ImageZoom = function (w, d) {
 		var closer				= document.createElement('a');
 
 		// Create target popup
-		targetIMGWrap.className	= 'imagezoom';
+		targetIMGWrap.className	= 'image-zoom';
 		targetIMG.src			= link.getAttribute('href');
 
 		// Add the new image
@@ -151,11 +151,11 @@ var ImageZoom = function (w, d) {
 			}, duration);
 		};
 
-		link.classList.add('imagezoom-loading');
+		link.classList.add('image-zoom-loading');
 
 		// When target has loaded
 		var goOn = function () {
-			link.classList.remove('imagezoom-loading');
+			link.classList.remove('image-zoom-loading');
 
 			// Store large image's size when it's as big as it can be
 			targetIMGSize = targetIMG.getBoundingClientRect();
